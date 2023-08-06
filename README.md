@@ -4,7 +4,9 @@ This project is a Reactjs Application made with the help of Tailwind CSS and Tai
 
 ## How to start
 
-1) Clone this github project using ### git clone
+1) Clone this github project using git clone <github-repository-url>
+2) Run npm install
+3) Run npm start
 
 ### `npm start`
 
