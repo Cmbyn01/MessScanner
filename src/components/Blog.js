@@ -13,11 +13,9 @@ const Blog = () => {
               Mess Entry System
             </h2>
             <p className="leading-relaxed mb-8">
-              Live-edge letterpress cliche, salvia fanny pack humblebrag narwhal
-              portland. VHS man braid palo santo hoodie brunch trust fund.
-              Bitters hashtag waistcoat fashion axe chia unicorn. Plaid fixie
-              chambray 90's, slow-carb etsy tumeric. Cray pug you probably
-              haven't heard of them hexagon kickstarter craft beer pork chic.
+              These are random components as of now. 
+              It will be replaced with the details of 
+              the student after scanning.
             </p>
             <div className="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-gray-100 mt-auto w-full">
               <a className="text-red-500 inline-flex items-center">
