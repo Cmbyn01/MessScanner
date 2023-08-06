@@ -1,10 +1,10 @@
 # Getting Started with this application
 
-This project is a React Application made with Tailwind CSS and Tailblocks components
+This project is a Reactjs Application made with the help of Tailwind CSS and Tailblocks components
 
-## Available Scripts
+## How to start
 
-In the project directory, you can run:
+1) Clone this github project using ### git clone
 
 ### `npm start`
 
