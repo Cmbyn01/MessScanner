@@ -74,12 +74,13 @@
 
 
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import StudentDetailsCard from './StudentDetails';
 
 function ScanScreen() {
   const [rollNumber, setRollNumber] = useState('');
   const [studentDetails, setStudentDetails] = useState(null);
+  const inputRef = useRef(null);
 
   //function to fetch student details 
   const handleScan = async () => {
@@ -92,10 +93,14 @@ function ScanScreen() {
       console.error('Error fetching student details:', error);
       setStudentDetails(null);
     }
+    inputRef.current.focus();
+    setRollNumber('');
   };
 //closing the student details card
   const handleClose = () => {
     setStudentDetails(null);
+    inputRef.current.focus();
+    setRollNumber('');
   };
 //after clicking accept on the student details card the data should be entered in the database, use the respective api url
   const handleAccept = async () => {
@@ -106,7 +111,7 @@ function ScanScreen() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          rollNo: rollNumber,
+          rollNo: studentDetails.rollNo,
           // name: studentDetails.name,
           // hall: studentDetails.hall,
           // entryTime: new Date().toISOString(), // or use a date library
@@ -116,17 +121,21 @@ function ScanScreen() {
       if (response.ok) {
         alert('Student accepted');
         console.log('Student accepted');
+        inputRef.current.focus();
       } else if (response.status === 403) {
         alert('Student already checked in');
         console.error('Error accepting student:', response.status);
+        inputRef.current.focus();
       }
       else if (response.status === 422) {
         alert('Invalid time for check-in');
         console.error('Error accepting student:', response.status);
+        inputRef.current.focus();
       }
       else if (response.status === 404) {
         alert('Student not found');
         console.error('Error accepting student:', response.status);
+        inputRef.current.focus();
       }
     } catch (error) {
       console.error('Error accepting student:', error);
@@ -139,6 +148,7 @@ function ScanScreen() {
         <h1 className="text-2xl font-semibold mb-4">SCAN ID HERE</h1>
       <div className="mb-4">
         <input
+        ref={inputRef}
           type="text"
           value={rollNumber}
           onChange={(e) => setRollNumber(e.target.value)}
@@ -156,7 +166,7 @@ function ScanScreen() {
       </div>
       {studentDetails && (
         <StudentDetailsCard
-          rollNumber={rollNumber}
+          rollNumber={studentDetails.rollNo}
           name={studentDetails.name}
           photoUrl={studentDetails.profilePic}
           onClose={handleClose}
