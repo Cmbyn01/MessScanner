@@ -85,7 +85,7 @@ function ScanScreen() {
   const handleScan = async () => {
     try {
       // Replace 'backendEndpoint' with the actual backend API endpoint
-      const response = await fetch(`backendEndpoint/student/${rollNumber}`);
+      const response = await fetch(`http://localhost:8000/user/users/${rollNumber}/`);
       const data = await response.json();
       setStudentDetails(data);
     } catch (error) {
@@ -100,21 +100,32 @@ function ScanScreen() {
 //after clicking accept on the student details card the data should be entered in the database, use the respective api url
   const handleAccept = async () => {
     try {
-      const response = await fetch('backendEndpoint/accept', {
+      const response = await fetch(`http://localhost:8000/user/checkin/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          rollNumber,
-          name: studentDetails.name,
-          hall: studentDetails.hall,
-          entryTime: new Date().toISOString(), // or use a date library
+          rollNo: rollNumber,
+          // name: studentDetails.name,
+          // hall: studentDetails.hall,
+          // entryTime: new Date().toISOString(), // or use a date library
         }),
       });
   
       if (response.ok) {
-      } else {
+        alert('Student accepted');
+        console.log('Student accepted');
+      } else if (response.status === 403) {
+        alert('Student already checked in');
+        console.error('Error accepting student:', response.status);
+      }
+      else if (response.status === 422) {
+        alert('Invalid time for check-in');
+        console.error('Error accepting student:', response.status);
+      }
+      else if (response.status === 404) {
+        alert('Student not found');
         console.error('Error accepting student:', response.status);
       }
     } catch (error) {
@@ -146,6 +157,8 @@ function ScanScreen() {
       {studentDetails && (
         <StudentDetailsCard
           rollNumber={rollNumber}
+          name={studentDetails.name}
+          photoUrl={studentDetails.profilePic}
           onClose={handleClose}
           onAccept={handleAccept}
         />
