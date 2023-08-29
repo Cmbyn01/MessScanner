@@ -1,3 +1,5 @@
+//page is not in use anymore
+
 import React from 'react';
 import logo from './images/WhatsApp Image 2023-08-15 at 18.39.41.jpeg';
 
