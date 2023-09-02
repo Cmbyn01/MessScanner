@@ -7,6 +7,14 @@
   margin-top: 1rem; /* Adjust this value to bring the components closer */
 }
 
+/* Center the file upload component vertically */
+.min-h-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 /* body {
   background-image: url('./components/images/MMM.jpg');
   background-size: cover;

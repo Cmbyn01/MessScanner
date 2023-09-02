@@ -32,6 +32,7 @@ import { Routes, Route } from 'react-router-dom';
 import ScanScreen from './components/ScanScreen';
 import Login from './components/Login';
 import Blog from './components/Blog';
+import FileUpload from './components/FileUpload';
 
 function App() {
 
@@ -40,6 +41,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LayoutWithHeaderAndFooter component={<Blog />} />} />
         <Route path='/scan-screen' element={<LayoutWithHeaderAndFooter component={<ScanScreen />} />} />
+        <Route path="/file-upload" element={<LayoutWithHeaderAndFooter component={<FileUpload />} />} />
         <Route path='/login' element={<Login />} />
       </Routes>
     </div>
