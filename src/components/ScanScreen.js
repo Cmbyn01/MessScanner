@@ -42,23 +42,36 @@ function ScanScreen() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen">
-      <div className="flex flex-col items-center bg-gray-200 rounded-lg p-6 shadow-md text-center">
-        <h1 className="text-2xl font-semibold mb-4">SCAN ID HERE</h1>
+    <div className="flex flex-col justify-center items-center h-screen" >
+      <div className="flex flex-col items-center justify-center bg-gray-200 rounded-lg p-6 shadow-md text-center" style={{'width': '60%', 'height': '60%'}}>
+        <h1 className="text-4xl font-semibold mb-10">SCAN ID HERE</h1>
         <div className="mb-4">
-          <input
+          {/* <input
             ref={inputRef}
             type="text"
             value={rollNumber}
             onChange={(e) => setRollNumber(e.target.value)}
             placeholder="Scan Roll Number"
             className="border border-gray-400 px-3 py-2 rounded-lg"
+          /> */}
+          <input
+            ref={inputRef}
+            type="text"
+            value={rollNumber}
+            onChange={(e) => setRollNumber(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleScan();
+              }
+            }}
+            placeholder="Scan Roll Number"
+            className="border border-gray-400 px-3 py-2 rounded-lg text-2xl mb-10"
           />
         </div>
-        <div className="mb-8">
+        <div className="mb-10">
           <button
             onClick={handleScan}
-            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+            className="bg-red-500 text-white px-8 py-4 rounded hover:bg-red-600 text-2xl"
           >
             Enter
           </button>
