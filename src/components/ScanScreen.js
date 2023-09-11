@@ -7,10 +7,12 @@ function ScanScreen() {
 
   const handleScan = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/user/checkin/`, {
+      const token = localStorage.getItem("messtoken")
+      const response = await fetch('http://localhost:8000/user/checkin/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Token ${token}`
         },
         body: JSON.stringify({
           rollNo: rollNumber,

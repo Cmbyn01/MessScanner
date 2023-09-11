@@ -26,7 +26,7 @@ const Login = () => {
       if (response.ok) {
         const data = await response.json();
         const { token, user_type: userType } = data;
-        localStorage.setItem('token', token);
+        localStorage.setItem('messtoken', token);
         localStorage.setItem('userType', userType);
 
         switch (userType) {
@@ -46,7 +46,7 @@ const Login = () => {
         }
 
         // Calling handleCheckIn function with the retrieved token
-        handleCheckIn(token);
+        // handleCheckIn(token);
       } else {
         setErrorMessage('Invalid credentials');
       }
@@ -56,25 +56,25 @@ const Login = () => {
     }
   };
 
-  const handleCheckIn = async (token) => {
-    try {
-      const response = await fetch('http://localhost:8000/user/checkin/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Token ${token}`
-        },
-      });
+  // const handleCheckIn = async (token) => {
+  //   try {
+  //     const response = await fetch('http://localhost:8000/user/checkin/', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'Authorization': `Token ${token}`
+  //       },
+  //     });
 
-      if (response.ok) {
-        // Handle successful check-in if needed
-      } else {
-        console.log('Check-in failed');
-      }
-    } catch (error) {
-      console.error('Error during check-in:', error);
-    }
-  };
+  //     if (response.ok) {
+  //       // Handle successful check-in if needed
+  //     } else {
+  //       console.log('Check-in failed');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error during check-in:', error);
+  //   }
+  // };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
