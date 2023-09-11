@@ -1,6 +1,3 @@
-//user can upload file
-
-
 import React, { useState } from 'react';
 
 function FileUpload() {
@@ -11,8 +8,27 @@ function FileUpload() {
     setSelectedFile(file);
   };
 
-  const handleUpload = () => {
-    // what logic should be added for the file upload?
+  const handleUpload = async () => {
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+
+      try {
+        const response = await fetch('http://localhost:8000/upload', {  //need to change the api url
+          method: 'POST',
+          body: formData,
+        });
+
+        if (response.ok) {
+          alert('File uploaded successfully!');
+        } else {
+          alert('File upload failed. Please try again.');
+        }
+      } catch (error) {
+        console.error('Error uploading file:', error);
+        alert('An error occurred while uploading the file.');
+      }
+    }
   };
 
   return (
@@ -21,13 +37,14 @@ function FileUpload() {
         <h1 className="text-3xl font-semibold mb-4">File Upload</h1>
         <input
           type="file"
-          accept=".pdf, .doc, .docx"
+          accept=".pdf, .doc, .docx, .csv, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           onChange={handleFileChange}
           className="border border-gray-400 px-4 py-2 rounded-lg"
         />
         <button
           onClick={handleUpload}
           className="mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
+          disabled={!selectedFile}
         >
           Upload
         </button>
@@ -37,3 +54,4 @@ function FileUpload() {
 }
 
 export default FileUpload;
+

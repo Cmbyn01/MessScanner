@@ -1,15 +1,19 @@
+//login page functionalities, fetches "user_type" and "token", user is then redirected to their respective pages
+
+
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
-  
+
   const handleSignIn = async (event) => {
     event.preventDefault();
     const username = event.target.username.value;
     const password = event.target.password.value;
-  
+
     try {
       const response = await fetch('http://localhost:8000/user/login/', {
         method: 'POST',
@@ -18,28 +22,31 @@ const Login = () => {
         },
         body: JSON.stringify({ username, password }),
       });
-  
+
       if (response.ok) {
         const data = await response.json();
         const { token, user_type: userType } = data;
-        localStorage.setItem('token', token); // Saved token in local storage
-        localStorage.setItem('userType', userType); // Saved user type in local storage
-  
+        localStorage.setItem('token', token);
+        localStorage.setItem('userType', userType);
+
         switch (userType) {
           case 'admin':
-            navigate('/admin-dashboard');  //need to change it to corresponding url
+            navigate('/admin-dashboard');
             break;
           case 'Mess Worker':
-            navigate('/scan-screen');      
+            navigate('/scan-screen');
             break;
           case 'HCM':
-            navigate('/hcm-dashboard');      //need to change it to corresponding url
+            navigate('/hcm-dashboard');
             break;
           default:
             console.error('User is not recognizable');
             setErrorMessage('User is not recognizable');
             break;
         }
+
+        // Calling handleCheckIn function with the retrieved token
+        handleCheckIn(token);
       } else {
         setErrorMessage('Invalid credentials');
       }
@@ -48,7 +55,27 @@ const Login = () => {
       setErrorMessage('Error during authentication');
     }
   };
-  
+
+  const handleCheckIn = async (token) => {
+    try {
+      const response = await fetch('http://localhost:8000/user/checkin/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Token ${token}`
+        },
+      });
+
+      if (response.ok) {
+        // Handle successful check-in if needed
+      } else {
+        console.log('Check-in failed');
+      }
+    } catch (error) {
+      console.error('Error during check-in:', error);
+    }
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <div className="bg-white shadow-md p-8 sm:w-full sm:max-w-sm">
@@ -101,18 +128,6 @@ const Login = () => {
 };
 
 export default Login;
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
