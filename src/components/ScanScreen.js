@@ -42,18 +42,25 @@ function ScanScreen() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen" >
+    <div className="flex flex-col justify-center items-center h-screen">
       <div className="flex flex-col items-center justify-center bg-gray-200 rounded-lg p-6 shadow-md text-center" style={{'width': '60%', 'height': '60%'}}>
         <h1 className="text-4xl font-semibold mb-10">SCAN ID HERE</h1>
         <div className="mb-4">
-          {/* <input
-            ref={inputRef}
-            type="text"
-            value={rollNumber}
-            onChange={(e) => setRollNumber(e.target.value)}
-            placeholder="Scan Roll Number"
-            className="border border-gray-400 px-3 py-2 rounded-lg"
-          /> */}
+          <h2 className="text-2xl mb-4">
+            {
+              // Determine meal slot based on time
+              (() => {
+                const now = new Date();
+                const hours = now.getHours();
+                let mealSlot = '';
+                if (hours >= 7 && hours < 9) mealSlot = 'Breakfast';
+                else if (hours >= 12 && hours < 14) mealSlot = 'Lunch';
+                else if (hours >= 16 && hours < 18) mealSlot = 'Snacks';
+                else if (hours >= 19 && hours < 21) mealSlot = 'Dinner';
+                return mealSlot ? `SLOT - ${mealSlot}` : 'SLOT - Invalid Timing';
+              })()
+            }
+          </h2>
           <input
             ref={inputRef}
             type="text"
@@ -65,7 +72,7 @@ function ScanScreen() {
               }
             }}
             placeholder="Scan Roll Number"
-            className="border border-gray-400 px-3 py-2 rounded-lg text-2xl mb-10"
+            className="border border-gray-400 px-3 py-2 rounded-lg text-2xl mb-4"
           />
         </div>
         <div className="mb-10">
@@ -79,6 +86,9 @@ function ScanScreen() {
       </div>
     </div>
   );
+  
+
+  
 }
 
 export default ScanScreen;

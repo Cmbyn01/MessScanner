@@ -56,25 +56,6 @@ const Login = () => {
     }
   };
 
-  // const handleCheckIn = async (token) => {
-  //   try {
-  //     const response = await fetch('http://localhost:8000/user/checkin/', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Authorization': `Token ${token}`
-  //       },
-  //     });
-
-  //     if (response.ok) {
-  //       // Handle successful check-in if needed
-  //     } else {
-  //       console.log('Check-in failed');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error during check-in:', error);
-  //   }
-  // };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
