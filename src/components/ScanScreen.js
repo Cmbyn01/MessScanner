@@ -3,7 +3,11 @@ import React, { useState, useRef } from 'react';
 
 function ScanScreen() {
   const [rollNumber, setRollNumber] = useState('');
+  const [lastentry, setlastentry] = useState('');
+  const [entryTime, setentryTime] = useState('');
   const inputRef = useRef(null);
+  const accepted = new Audio('/accepted.mp3');
+  const failed = new Audio('/wrong.mp3');
 
   const handleScan = async () => {
     try {
@@ -20,18 +24,24 @@ function ScanScreen() {
       });
 
       if (response.ok) {
-        alert('Student accepted');
+        // alert('Student accepted');
         console.log('Student accepted');
+        accepted.play();
+        setlastentry(rollNumber);
+        setentryTime(new Date().toLocaleTimeString());
       } else if (response.status === 403) {
-        alert('Student already checked in');
+        // alert('Student already checked in');
+        failed.play();
         console.error('Error accepting student:', response.status);
       }
       else if (response.status === 422) {
-        alert('Invalid time for check-in');
+        // alert('Invalid time for check-in');
+        failed.play();
         console.error('Error accepting student:', response.status);
       }
       else if (response.status === 404) {
-        alert('Student not found');
+        // alert('Student not found');
+        failed.play();
         console.error('Error accepting student:', response.status);
       }
     } catch (error) {
@@ -55,12 +65,13 @@ function ScanScreen() {
                 let mealSlot = '';
                 if (hours >= 7 && hours < 9) mealSlot = 'Breakfast';
                 else if (hours >= 12 && hours < 14) mealSlot = 'Lunch';
-                else if (hours >= 16 && hours < 18) mealSlot = 'Snacks';
+                else if (hours >= 16 && hours < 19) mealSlot = 'Snacks';
                 else if (hours >= 19 && hours < 21) mealSlot = 'Dinner';
                 return mealSlot ? `SLOT - ${mealSlot}` : 'SLOT - Invalid Timing';
               })()
             }
           </h2>
+          <h2 className="text-2xl mb-4"> Last Entry: {lastentry} at {entryTime}</h2>
           <input
             ref={inputRef}
             type="text"
